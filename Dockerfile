@@ -20,6 +20,7 @@ RUN echo "source /dev_ws/install/local_setup.bash" >> ~/.bashrc
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["ros2 launch vda5050_bringup vda5050_launch.py"]
 
 # Build with eg. `docker build . -t inorbit`
-# Then execute with `docker run -it inorbit "/bin/bash -c \"ros2 launch vda5050_bringup vda5050_launch.py\""`
+# Then execute with `docker run -it inorbit"` and the vda5050_bringup will be launch automatically
