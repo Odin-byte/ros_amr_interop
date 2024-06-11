@@ -5,6 +5,7 @@ WORKDIR /dev_ws/
 RUN apt update && apt install ros-humble-ament* mosquitto-clients python3-paho-mqtt python3-pytest python3-pytest-mock -y
 # && rm -rf /var/lib/apt/lists/*
 
+ADD luka_adapter /dev_ws/src/luka_adapter
 ADD vda5050_msgs /dev_ws/src/vda5050_msgs
 ADD vda5050_serializer /dev_ws/src/vda5050_serializer
 ADD vda5050_connector /dev_ws/src/vda5050_connector
