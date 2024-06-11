@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>vda5050_bringup</name>
+  <version>0.0.1</version>
+  <description>
+    The vda5050_bringup package starts the various nodes to control a robot using vda5050
+  </description>
+
+  <maintainer email="loy.vanbeek@4am-robotics.com">Loy van Beek</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>vda5050_connector</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
