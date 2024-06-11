@@ -18,6 +18,6 @@ def generate_launch_description():
     return LaunchDescription(
         [
             mqtt_bridge,
-            vda5050_controller,
+            # vda5050_controller,
         ]
     )
