@@ -87,6 +87,11 @@ def generate_vda_order_msg(order):
         # interpret as integers, causing the validation errors
         for k in ["x", "y", "theta"]:
             node["node_position"][k] = float(node["node_position"][k])
+
+            # Remap 'allowed_deviation_xy' from MHP testtool order to 'allowed_deviation_x_y' defined in msgs.
+            if 'allowed_deviation_xy' in node["node_position"]:
+                node["node_position"]['allowed_deviation_x_y'] = float(node["node_position"]['allowed_deviation_xy'])
+                del node["node_position"]['allowed_deviation_xy']
         node["node_position"] = VDANodePosition(**node["node_position"])
         for action in node.get("actions", []):
             if "action_parameters" in action:
@@ -310,18 +315,18 @@ class MQTTBridge(Node):
             self.logger.error(f"Failed to decode message: '{msg.payload}'")
             return
 
-        try:
-            if msg.topic.endswith("order"):
-                vda_order_msg = VDAOrder(**generate_vda_order_msg(msg_json))
-                self._order_pub.publish(msg=vda_order_msg)
-            if msg.topic.endswith("instantActions"):
-                vda_instant_actions_message = VDAInstantActions(
-                    **generate_vda_instant_action_msg(msg_json)
-                )
-                self._instant_actions_pub.publish(msg=vda_instant_actions_message)
-        except KeyError as ex:
-            self.logger.warn(f"Ignoring invalid VDA5050 message: {ex}.")
-            return
+        # try:
+        if msg.topic.endswith("order"):
+            vda_order_msg = VDAOrder(**generate_vda_order_msg(msg_json))
+            self._order_pub.publish(msg=vda_order_msg)
+        if msg.topic.endswith("instantActions"):
+            vda_instant_actions_message = VDAInstantActions(
+                **generate_vda_instant_action_msg(msg_json)
+            )
+            self._instant_actions_pub.publish(msg=vda_instant_actions_message)
+        # except KeyError as ex:
+        #     self.logger.warn(f"Ignoring invalid VDA5050 message: {ex}.")
+        #     return
 
     def on_disconnect_mqtt(self, client, userdata, rc):
         """MQTT client disconnect callback."""
