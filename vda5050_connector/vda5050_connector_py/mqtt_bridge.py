@@ -88,7 +88,7 @@ def generate_vda_order_msg(order):
         for k in ["x", "y", "theta"]:
             node["node_position"][k] = float(node["node_position"][k])
         node["node_position"] = VDANodePosition(**node["node_position"])
-        for action in node["actions"]:
+        for action in node.get("actions", []):
             if "action_parameters" in action:
                 action["action_parameters"] = [
                     VDAActionParameter(
@@ -97,11 +97,11 @@ def generate_vda_order_msg(order):
                     )
                     for action_parameter in action["action_parameters"]
                 ]
-        node["actions"] = [VDAAction(**action) for action in node["actions"]]
+        node["actions"] = [VDAAction(**action) for action in node.get("actions", [])]
 
     vda_order["nodes"] = [VDANode(**node) for node in vda_order["nodes"]]
     for edge in vda_order["edges"]:
-        for action in edge["actions"]:
+        for action in edge.get("actions", []):
             if "action_parameters" in action:
                 action["action_parameters"] = [
                     VDAActionParameter(
@@ -110,7 +110,7 @@ def generate_vda_order_msg(order):
                     )
                     for action_parameter in action["action_parameters"]
                 ]
-        edge["actions"] = [VDAAction(**action) for action in edge["actions"]]
+        edge["actions"] = [VDAAction(**action) for action in edge.get("actions", [])]
 
         # Force all numbers to float. Values with no decimals are
         # interpreted as integers, causing the validation errors.
@@ -125,7 +125,7 @@ def generate_vda_order_msg(order):
             if k in edge:
                 edge[k] = float(edge[k])
 
-        if "trajectory" in edge:
+        if "trajectory" in edge and edge["trajectory"]:
             edge["trajectory"] = VDATrajectory(
                 degree=float(edge["trajectory"]["degree"]),
                 knot_vector=edge["trajectory"]["knot_vector"],
