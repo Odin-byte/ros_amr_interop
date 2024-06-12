@@ -92,6 +92,10 @@ def generate_vda_order_msg(order):
             if 'allowed_deviation_xy' in node["node_position"]:
                 node["node_position"]['allowed_deviation_x_y'] = float(node["node_position"]['allowed_deviation_xy'])
                 del node["node_position"]['allowed_deviation_xy']
+
+            # Some master send this as a string for some reason.
+            if 'allowed_deviation_theta' in node["node_position"]:
+                node["node_position"]['allowed_deviation_theta'] = float(node["node_position"]['allowed_deviation_theta'])
         node["node_position"] = VDANodePosition(**node["node_position"])
         for action in node.get("actions", []):
             if "action_parameters" in action:
@@ -143,6 +147,7 @@ def generate_vda_order_msg(order):
                     for cp in edge["trajectory"]["control_points"]
                 ],
             )
+
     vda_order["edges"] = [VDAEdge(**edge) for edge in vda_order["edges"]]
     # TODO(@leandropineda): Consider returning a ROS2 Order message
     return vda_order
