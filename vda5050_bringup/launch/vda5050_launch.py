@@ -26,6 +26,6 @@ def generate_launch_description():
         [
             luka_adapter,
             mqtt_bridge,
-            # vda5050_controller,
+            vda5050_controller,
         ]
     )

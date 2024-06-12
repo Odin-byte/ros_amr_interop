@@ -89,7 +89,7 @@ from vda5050_connector.action import ProcessVDAAction
 
 # Constants
 DEFAULT_NODE_NAME = "controller"
-DEFAULT_NAMESPACE = "vda5050"
+DEFAULT_NAMESPACE = "uagv"
 DEFAULT_ROBOT_NAME = "robot_1"
 DEFAULT_MANUFACTURER_NAME = "robots"
 DEFAULT_SERIAL_NUMBER = "robot_1"
